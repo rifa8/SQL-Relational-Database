@@ -3,56 +3,164 @@ RELEASE 1:
 1) Insert
     1.a) Insert 3 product type.
 
+	insert into product_type("type", detail) values
+		('single', 'one wall art'),
+		('set of 3', 'get 3 different wall art'),
+		('set of 5', 'get 5 different wall art');
+
+
     1.b) Insert 2 product dengan product type id = 1
+
+    	insert into product(nama, "size", price, product_type_id) values
+		('Fuji_Mountain_A2', '42 x 59.4 cm', 200000, 1),
+		('Fuji_Mountain_A3', '29.7 x 42 cm', 175000, 1);
 
     1.c) Insert 3 product dengan product type id = 2
 
+    	insert into product(nama, "size", price, product_type_id) values
+		('Home_Sweet_Home', '10R, 8R, 6R', 250000, 2),
+		('Vintage_City', '10R, 8R, 6R', 250000, 2),
+		('Monstera_Leaves_Trio', 'A3 x3', 475000, 2);
+
     1.d) Insert 3 product dengan product type id = 3
+
+    	insert into product(nama, "size", price, product_type_id) values
+		('Cats_And_Dogs', '10R x2, 8R, 6R x2', 425000, 3),
+		('Good_Vibes', '8R x2, 6R x3', 325000, 3),
+		('Beach_Sunset', '12R, 10R x2, 8R x2', 500000, 3);
 
     1.e) Insert product description pada setiap product.
 
+    	insert into product_description(product_id, description) values
+		(1, 'portrait gunung fuji di jepang saat musim semi ukuran A2'),
+		(2, 'portrait gunung fuji di jepang saat musim semi ukuran A3'),
+		(3, 'wall art berupa tulisan home (8R), sweet (10R) dan home (6R) yang artistik'),
+		(4, 'portrait landmark 3 kota bertema vintage: Big Ben (8R), Eiffel Tower (10R) dan Leaning Tower of Pisa (6R)'),
+		(5, 'Wall art tiga daun monstera dengan bentuk yang berbeda (ukuran sama A3)'),
+		(6, 'portrait anjing(10Rx2), kucing(6Rx2) dan anak kucing(8R)'),
+		(7, 'wall art berupa tulisan good (8R), vibes(8R), dan 3 gambar geometri style yang berbeda (6Rx3)'),
+		(8, 'Landscape pantai saat sunset yang dibagi menjadi 5 pieces dengan ukuran berbeda: 12R, 10Rx2 dan 8Rx2');
+
     1.f) Insert 3 payment methods.
+
+    	insert into payment_method(nama) values
+		('Virtual Account'),
+		('Credit Card'),
+		('Paypal');
 
     1.g) Insert 5 user pada tabel user.
 
+    	insert into customer (nama, alamat, tanggal_lahir, status_user, gender, created_at, updated_at) values
+		('Aditya Nur Iman', 'Jl. Mawar no. 7, Jakarta Timur', '1998-10-03', 'active', 'M', '2023-09-04', '2023-09-04'),
+		('Della Amanda', 'Jl. Bukit no. 11, Tangerang', '1998-04-12', 'active', 'F', '2023-09-05', '2023-09-05'),
+		('Oetomo Soeboer', 'Jl. Bambu no. 2, Jawa Tengah', '1970-02-09', 'active', 'M', '2023-09-06', '2023-09-06'),
+		('Mia Charlotte', 'Queens Road 42, Singapore', '1985-12-24', 'active', 'F', '2023-09-07', '2023-09-07'),
+		('Faisal Saleh', 'Jl. Chinatown, Kuala Lumpur', '1990-08-13', 'active', 'M', '2023-09-08', '2023-09-08');
+
     1.h) Insert 3 transaksi di masing-masing user (min 3 user). (soal berlanjut ke soal 1.j)
 
+    	insert into transaksi (customer_id, payment_method_id, tanggal, paid_amount, status) values
+		(2, 1, '2023-09-05', 700000, 'completed'),
+		(2, 1, '2023-09-07', 800000, 'completed'),
+		(2, 1, '2023-09-09', 1300000, 'completed'),
+		(4, 2, '2023-09-07', 1400000, 'completed'),
+		(4, 2, '2023-09-11', 1500000, 'completed'),
+		(4, 2, '2023-09-12', 1050000, 'completed'),
+		(5, 3, '2023-09-08', 750000, 'completed'),
+		(5, 3, '2023-09-09', 1000000, 'completed'),
+		(5, 3, '2023-09-12', 825000, 'completed');
+
     1.i) Insert 3 product di masing-masing transaksi.
+
+    	insert into transaksi_detail (product_id, transaksi_id, qty, price) values
+		(1, 1, 1, 200000), (3, 1, 1, 250000), (4, 1, 1, 250000),
+		(1, 2, 1, 200000), (2, 2, 1, 175000), (6, 2, 1, 425000),
+		(5, 3, 1, 475000), (7, 3, 1, 325000), (8, 3, 1, 500000),
+		(5, 4, 1, 475000), (6, 4, 1, 425000), (8, 4, 1, 500000),
+		(8, 5, 3, 1500000),
+		(1, 6, 1, 200000), (6, 6, 2, 850000),
+		(2, 7, 1, 175000), (4, 7, 1, 250000), (7, 7, 1, 325000),
+		(3, 8, 2, 500000), (8, 8, 1, 500000),
+		(3, 9, 1, 250000), (4, 9, 1, 250000), (7, 9, 1, 325000);
 
 2) Select
     2.a) Tampilkan nama user / pelanggan dengan gender Laki-laki / M.
 
+    	select nama from customer where gender = 'M';
+
     2.b) Tampilkan product dengan id = 3.
+
+    	select * from product where id = 3;
 
     2.c) Tampilkan data pelanggan yang created_at dalam range 7 hari kebelakang dan mempunyai nama mengandung kata ‘a’.
 
+    	select * from customer where created_at > current_date - interval '7 days' and nama like '%a%';
+
     2.d) Hitung jumlah user / pelanggan dengan status gender Perempuan.
+
+    	select count(gender) from customer where gender = 'F';
 
     2.e) Tampilkan data pelanggan dengan urutan sesuai nama abjad
 
+    	select * from customer order by nama asc;
+
     2.f) Tampilkan 5 data transaksi dengan product id = 3
+
+    	select * from transaksi_detail where product_id = 3 limit 5;
 
 3. Update
     3.a) Ubah data product id 1 dengan nama ‘product dummy’.
 
+    	update product set nama = 'product dummy' where id = 1;
+
     3.b) Update qty = 3 pada transaction detail dengan product id 1.
+
+    	update transaksi_detail set qty = 3 where product_id = 1;
 
 4. Delete
     4.a) Delete data pada tabel product dengan id 1.
 
+    	delete from product where id = 1;
+
     4.b) Delete pada tabel product dengan product-type id 1.
+
+    	delete from product where product_type_id = 1;
 
 
 RELEASE 2: Join, Union, Sub-query, Function
 
 1. Gabungkan data transaksi dari user id 1 dan user id 2.
 
+	select * from transaksi where customer_id = 1
+	union
+	select * from transaksi where customer_id = 2;
+
 2. Tampilkan jumlah harga transaksi user id 1.
+
+	select sum(paid_amount) from transaksi where customer_id = 1;
 
 3. Tampilkan total transaksi dengan product type 2.
 
+	select product_type_id, count(distinct transaksi_id) as total_transaksi
+	from transaksi_detail td
+	join product p on td.product_id = p.id where product_type_id = 2
+	group by product_type_id;
+
 4. Tampilkan semua field table product dan field name table product type yang saling berhubungan.
+
+
+	select p.id, p.nama, p."size", p.price, p.product_type_id, pt."type"
+	from product p
+	join product_type pt on p.product_type_id = pt.id;
 
 5. Tampilkan semua field table transaction, field name table product dan field name table user.
 
+	select t.customer_id, t.payment_method_id, t.tanggal, t.paid_amount, t.status, p.nama, c.nama
+	from transaksi t
+	join customer c on t.customer_id = c.id
+	join transaksi_detail td on td.transaksi_id = t.id
+	join product p on td.product_id = p.id;
+
 6. Tampilkan data products yang tidak pernah ada di tabel transaction_details dengan sub-query.
+
+	select * from product p where p.id not in (select product_id from transaksi_detail);

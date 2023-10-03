@@ -1,34 +1,124 @@
 1) Create database alta_online_shop.
-Sulisi SQL:
+Solusi SQL: create database alta_online_shop;
 
 2) Dari schema Olshop yang telah kamu kerjakan di, Implementasikanlah menjadi table pada MySQL.
     2.a Create table user
-    Sulisi SQL:
+    Solusi SQL: create table customer (
+			id serial primary key,
+			nama text not null,
+			alamat text not null,
+			tanggal_lahir date,
+			status_user text,
+			gender text,
+			created_at date,
+			updated_at date
+		);
 
     2.b Create table product, product_type, product_description, payment_method.
-    Sulisi SQL:
+    Solusi SQL: create table product_type (
+			id serial primary key,
+			tipe text not null,
+			detail text not null
+		);
 
-    3.c Create table transaction, transaction detail.
-    Sulisi SQL:
+
+		create table product_description (
+			id serial primary key,
+			description text not null
+		);
+
+
+		create table product (
+			id serial primary key,
+			nama text not null,
+			harga int,
+			sku text unique,
+			product_type_id int,
+			product_desc_id int,
+			merk_id int,
+			foreign key(product_type_id) references product_type(id) on update cascade on delete cascade,
+			foreign key(product_desc_id) references product_description(id) on update cascade on delete cascade,
+			foreign key(merk_id) references merk(id) on update cascade on delete cascade
+		);
+
+
+		create table payment_method (
+			id serial primary key,
+			nama text not null
+		);
+
+    2.c Create table transaction, transaction detail.
+    Solusi SQL: create table "transaction" (
+			id serial primary key,
+			customer_id int,
+			payment_method_id int,
+			tanggal date,
+			paid_amount int,
+			status text,
+			foreign key(customer_id) references customer(id) on update cascade on delete cascade,
+			foreign key(payment_method_id) references payment_method(id) on update cascade on delete cascade
+		);
+
+
+		create table transaction_detail (
+			id serial primary key,
+			product_id int,
+			transaction_id int,
+			qty int,
+			harga int,
+			sub_total int,
+			foreign key(product_id) references product(id) on update cascade on delete cascade,
+			foreign key(transaction_id) references "transaction"(id) on update cascade on delete cascade
+		);
 
 3) Create table kurir dengan field id, name, created_at, updated_at.
-Sulisi SQL:
+Solusi SQL: create table kurir (
+		id serial primary key,
+		"name" text not null,
+		created_at date,
+		updated_at date);
 
 4) Tambahkan ongkos_dasar column di tabel kurir.
-Sulisi SQL:
+Solusi SQL: alter table kurir add column ongkos_dasar int;
 
 5) Rename tabel kurir menjadi shipping.
-Sulisi SQL:
+Solusi SQL: alter table kurir rename to shipping;
 
 6) Hapus / Drop tabel shipping karena ternyata tidak dibutuhkan.
-Sulisi SQL:
+Solusi SQL: drop table shipping;
 
 7) Silahkan menambahkan entity baru dengan relation 1-to-1, 1-to-many, many-to-many. Seperti:
     7.a) 1-to-1: payment_method dengan description.
-    Sulisi SQL:
+    Solusi SQL: --membuat entitas baru (deskripsi payment method) yang terhubung 1-to-1 dengan table payment_method pada nomor 2b
+    		create table payment_method_desc (
+    			id serial primary key,
+			payment_method_id int,
+			nama text,
+			description text,
+			foreign key(payment_method_id) references payment_method(id) on update cascade on delete cascade
+		);
 
     7.b) 1-to-many: user dengan alamat.
-    Sulisi SQL:
+    Solusi SQL: --membuat entitas baru (alamat user) yang terhubung 1-to-many dengan table customer pada nomor 2a
+		create table customer_address (
+			id serial primary key,
+			customer_id int,
+			jalan text,
+			kota text,
+			provinsi text,
+			negara text,
+			foreign key(customer_id) references customer(id) on update casacade on delete cascade
+		);
 
     7.c) many-to-many: user dengan payment_method menjadi user_payment_method_detail.
-    Sulisi SQL:
+    Solusi SQL: --membuat entitas baru (user payment method detail) yang terhubung many-to-many dengan table customer dan payment_method pada nomor 2a dan 2b
+    		create table customer_payment_method_detail (
+			id serial primary key,
+			customer_id int,
+			payment_method_id int,
+			activated_at date,
+			status text,
+			detail text,
+			foreign key(customer_id) references customer(id) on update cascade on delete cascade,
+			foreign key(payment_method_id) references payment_method(id) on update cascade on delete cascade
+		);
